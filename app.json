@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "target",
+    "scheme": "target",
     "slug": "target",
     "version": "1.0.0",
     "android": {
@@ -14,6 +15,9 @@
     "ios": {
       "bundleIdentifier": "dev.enosads.target",
       "icon": "./assets/ios-icon.png"
-    }
+    },
+    "plugins": [
+      "expo-router"
+    ]
   }
 }
