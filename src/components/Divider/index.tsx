@@ -5,6 +5,6 @@ export type DividerProps = {
   color: ColorValue
 }
 
-export function Divider({ color }: DividerProps) {
+export function Separator({ color }: DividerProps) {
   return <View style={[styles.container, { backgroundColor: color }]}></View>
 }
