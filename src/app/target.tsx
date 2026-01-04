@@ -1,4 +1,4 @@
-import { View } from 'react-native'
+import { StatusBar, View } from 'react-native'
 import { Button } from '@/components/Button'
 import { CurrencyInput } from '@/components/CurrencyInput'
 import { Input } from '@/components/Input'
@@ -7,6 +7,7 @@ import { PageHeader } from '@/components/PageHeader'
 export default function Target() {
   return (
     <View style={{ flex: 1, padding: 24 }}>
+      <StatusBar barStyle={'dark-content'} />
       <PageHeader title="Meta" />
       <View style={{ marginTop: 32, gap: 24 }}>
         <Input
