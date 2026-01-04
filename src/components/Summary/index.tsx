@@ -13,16 +13,16 @@ export type Props = {
     name: keyof typeof MaterialIcons.glyphMap
     color: ColorValue
   }
-  isLeft?: boolean
+  isRight?: boolean
 }
 
-export function Summary({ data, icon, isLeft = false }: Props) {
+export function Summary({ data, icon, isRight = false }: Props) {
   return (
     <View style={styles.container}>
       <View
         style={[
           styles.header,
-          { justifyContent: isLeft ? 'flex-start' : 'flex-end' },
+          { justifyContent: isRight ? 'flex-end' : 'flex-start' },
         ]}
       >
         <MaterialIcons name={icon.name} size={24} color={icon.color} />
