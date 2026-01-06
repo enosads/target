@@ -6,6 +6,7 @@
     "start": "expo start --dev-client",
     "android": "expo run:android",
     "ios": "expo run:ios",
+    "ios:device": "expo run:ios --device",
     "web": "expo start --web",
     "lint": "biome check .",
     "lint:fix": "biome check --write ."
@@ -20,6 +21,7 @@
     "expo-linking": "~8.0.11",
     "expo-router": "~6.0.21",
     "expo-splash-screen": "~0.29.22",
+    "expo-sqlite": "~16.0.10",
     "expo-status-bar": "~3.0.9",
     "npx": "^10.2.2",
     "prebuild": "^13.0.1",
