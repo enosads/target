@@ -16,9 +16,6 @@
       "bundleIdentifier": "dev.enosads.target",
       "icon": "./assets/ios-icon.png"
     },
-    "plugins": [
-      "expo-router",
-      "expo-sqlite"
-    ]
+    "plugins": ["expo-router", "expo-sqlite"]
   }
 }

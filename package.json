@@ -9,7 +9,8 @@
     "ios:device": "expo run:ios --device",
     "web": "expo start --web",
     "lint": "biome check .",
-    "lint:fix": "biome check --write ."
+    "lint:fix": "biome check --write .",
+    "open-db": "open $(xcrun simctl get_app_container booted dev.enosads.target data)"
   },
   "dependencies": {
     "@expo-google-fonts/inter": "^0.4.2",
@@ -34,6 +35,7 @@
   },
   "private": true,
   "devDependencies": {
+    "@arthurrios/biome-config": "^1.1.4",
     "@biomejs/biome": "2.3.10",
     "@types/react": "~19.1.10",
     "typescript": "~5.9.2"

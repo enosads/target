@@ -66,6 +66,9 @@ importers:
         specifier: ~4.16.0
         version: 4.16.0(react-native@0.81.5(@babel/core@7.28.5)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)
     devDependencies:
+      '@arthurrios/biome-config':
+        specifier: ^1.1.4
+        version: 1.1.4(@biomejs/biome@2.3.10)(react@19.1.0)(typescript@5.9.3)
       '@biomejs/biome':
         specifier: 2.3.10
         version: 2.3.10
@@ -84,6 +87,21 @@ packages:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
     peerDependenciesMeta:
       graphql:
+        optional: true
+
+  '@arthurrios/biome-config@1.1.4':
+    resolution: {integrity: sha512-ehaeoqXE8qyiVvlILNyYBwzJmUlxi2j5ujGSWEXDoGGzpZ8mpe567LQOeEnjVKRQaFEgbpxpBz/9jwc6csp4WA==}
+    peerDependencies:
+      '@biomejs/biome': ^2.1.1
+      next: '>=13.0.0'
+      react: '>=16.0.0'
+      typescript: '>=5'
+    peerDependenciesMeta:
+      next:
+        optional: true
+      react:
+        optional: true
+      typescript:
         optional: true
 
   '@babel/code-frame@7.10.4':
@@ -4019,6 +4037,13 @@ packages:
 snapshots:
 
   '@0no-co/graphql.web@1.2.0': {}
+
+  '@arthurrios/biome-config@1.1.4(@biomejs/biome@2.3.10)(react@19.1.0)(typescript@5.9.3)':
+    dependencies:
+      '@biomejs/biome': 2.3.10
+    optionalDependencies:
+      react: 19.1.0
+      typescript: 5.9.3
 
   '@babel/code-frame@7.10.4':
     dependencies:

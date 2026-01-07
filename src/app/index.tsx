@@ -1,9 +1,13 @@
-import { router } from 'expo-router'
-import { StatusBar, View } from 'react-native'
+import { router, useFocusEffect } from 'expo-router'
+import { useCallback, useState } from 'react'
+import { Alert, StatusBar, View } from 'react-native'
 import { Button } from '@/components/Button'
 import { HomeHeader } from '@/components/HomeHeader'
 import { List } from '@/components/List'
-import { Target } from '@/components/Target'
+import { Loading } from '@/components/Loading'
+import { Target, type TargetProps } from '@/components/Target'
+import { useTargetDatabase } from '@/database/useTargetDatabase'
+import { numberToCurrency } from '@/utils/numberToCurrency'
 
 const summary = {
   total: 'R$ 2.680,00',
@@ -11,31 +15,44 @@ const summary = {
   output: { label: 'Saídas', value: '-R$ 883.65' },
 }
 
-const targets = [
-  {
-    id: '1',
-    name: 'Apple Watch',
-    percentage: '50%',
-    current: 'R$ 580,00 ',
-    target: 'R$ 1.160,00',
-  },
-  {
-    id: '2',
-    name: 'Comprar uma cadeira ergonômica',
-    percentage: '75%',
-    current: 'R$ 900,00',
-    target: 'R$ 1.2000,00',
-  },
-  {
-    id: '3',
-    name: 'Fazer uma viagem para o Rio de Janeiro',
-    percentage: '75%',
-    current: 'R$ 2.250,00',
-    target: 'R$ 3.000,00',
-  },
-]
-
 export default function Index() {
+  const [isFetching, setIsFetching] = useState(true)
+  const [targets, setTargets] = useState<TargetProps[]>([])
+  const targetDataBase = useTargetDatabase()
+
+  const fetchTargets = async (): Promise<TargetProps[]> => {
+    try {
+      const response = await targetDataBase.listBySavedValue()
+      return response.map((target) => ({
+        id: String(target.id),
+        name: target.name,
+        current: numberToCurrency(target.current),
+        percentage: `${target.percentage.toFixed(0)}%`,
+        target: numberToCurrency(target.amount),
+      }))
+    } catch (error) {
+      Alert.alert('Error', 'Não foi possível carregar as metas')
+      console.log(error)
+    }
+  }
+
+  const fetchData = async () => {
+    const targetDataPromise = fetchTargets()
+    const [targetData] = await Promise.all([targetDataPromise])
+    setTargets(targetData)
+    setIsFetching(false)
+  }
+
+  useFocusEffect(
+    useCallback(() => {
+      void fetchData()
+    }, []),
+  )
+
+  if (isFetching) {
+    return <Loading />
+  }
+
   return (
     <View style={{ flex: 1 }}>
       <StatusBar barStyle="light-content" />

@@ -1,4 +1,5 @@
-import { Text, View } from 'react-native'
+import { forwardRef } from 'react'
+import { Text, TextInput, View } from 'react-native'
 import Input, { type CurrencyInputProps } from 'react-native-currency-input'
 import { colors } from '@/theme'
 import { styles } from './styles'
@@ -7,20 +8,23 @@ type Props = CurrencyInputProps & {
   label: string
 }
 
-export function CurrencyInput({ label, ...rest }: Props) {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.label}>{label}</Text>
+export const CurrencyInput = forwardRef<TextInput, Props>(
+  ({ label, ...rest }, ref) => {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.label}>{label}</Text>
 
-      <Input
-        style={styles.input}
-        placeholderTextColor={colors.gray[400]}
-        delimiter="."
-        separator=","
-        precision={2}
-        minValue={0}
-        {...rest}
-      />
-    </View>
-  )
-}
+        <Input
+          ref={ref}
+          style={styles.input}
+          placeholderTextColor={colors.gray[400]}
+          delimiter="."
+          separator=","
+          precision={2}
+          minValue={0}
+          {...rest}
+        />
+      </View>
+    )
+  },
+)
