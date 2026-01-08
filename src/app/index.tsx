@@ -7,22 +7,23 @@ import { List } from '@/components/List'
 import { Loading } from '@/components/Loading'
 import { Target, type TargetProps } from '@/components/Target'
 import { useTargetDatabase } from '@/database/useTargetDatabase'
+import { useTransactionsDatabase } from '@/database/useTrasactionsDatabase'
 import { numberToCurrency } from '@/utils/numberToCurrency'
-
-const summary = {
-  total: 'R$ 2.680,00',
-  input: { label: 'Entradas', value: 'R$ 6,184.90' },
-  output: { label: 'Saídas', value: '-R$ 883.65' },
-}
 
 export default function Index() {
   const [isFetching, setIsFetching] = useState(true)
+  const [summary, setSummary] = useState({
+    input: 'R$ 0,00',
+    output: 'R$ 0,00',
+    total: 'R$ 0,00',
+  })
   const [targets, setTargets] = useState<TargetProps[]>([])
   const targetDataBase = useTargetDatabase()
+  const transactionsDatabase = useTransactionsDatabase()
 
   const fetchTargets = async (): Promise<TargetProps[]> => {
     try {
-      const response = await targetDataBase.listBySavedValue()
+      const response = await targetDataBase.listByClosestTarget()
       return response.map((target) => ({
         id: String(target.id),
         name: target.name,
@@ -38,9 +39,29 @@ export default function Index() {
 
   const fetchData = async () => {
     const targetDataPromise = fetchTargets()
-    const [targetData] = await Promise.all([targetDataPromise])
+    const summaryDataPromise = fetchSummary()
+
+    const [targetData, summaryData] = await Promise.all([
+      targetDataPromise,
+      summaryDataPromise,
+    ])
     setTargets(targetData)
+    setSummary(summaryData)
     setIsFetching(false)
+  }
+
+  const fetchSummary = async () => {
+    try {
+      const response = await transactionsDatabase.summary()
+      return {
+        input: numberToCurrency(response.input),
+        output: numberToCurrency(response.output),
+        total: numberToCurrency(response.input + response.output),
+      }
+    } catch (error) {
+      console.log(error)
+      Alert.alert('Erro', 'Não foi possível carregar o resumo')
+    }
   }
 
   useFocusEffect(

@@ -33,7 +33,7 @@ export function useTargetDatabase() {
     })
   }
 
-  function listBySavedValue() {
+  function listByClosestTarget() {
     return database.getAllAsync<TargetResponse>(`
       SELECT
           targets.id,
@@ -94,6 +94,6 @@ export function useTargetDatabase() {
     show,
     update,
     remove,
-    listBySavedValue,
+    listByClosestTarget,
   }
 }

@@ -1,14 +1,14 @@
 import { LinearGradient } from 'expo-linear-gradient'
 import { Text, View } from 'react-native'
 import { Separator } from '@/components/Divider'
-import { Summary, type SummaryProps } from '@/components/Summary'
+import { Summary } from '@/components/Summary'
 import { colors } from '@/theme'
 import { styles } from './styles'
 
 export type HomeHeaderProps = {
   total: string
-  input: SummaryProps
-  output: SummaryProps
+  input: string
+  output: string
 }
 
 export type Props = {
@@ -29,11 +29,17 @@ export function HomeHeader({ data }: Props) {
 
       <View style={styles.summaryContainer}>
         <Summary
-          data={data.input}
+          data={{
+            label: 'Entradas',
+            value: data.input,
+          }}
           icon={{ name: 'arrow-upward', color: colors.green['500'] }}
         />
         <Summary
-          data={data.output}
+          data={{
+            label: 'Saídas',
+            value: data.output,
+          }}
           icon={{ name: 'arrow-downward', color: colors.red['400'] }}
           isRight
         />
