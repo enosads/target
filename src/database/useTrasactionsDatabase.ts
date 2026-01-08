@@ -6,10 +6,6 @@ export type TransactionCreate = {
   observation?: string
 }
 
-export type TransactionUpdate = TransactionCreate & {
-  id: number
-}
-
 export type TransactionResponse = {
   id: number
   target_id: number
@@ -73,30 +69,13 @@ export function useTransactionsDatabase() {
     )
   }
 
-  async function update(data: TransactionUpdate) {
-    const statement = await database.prepareAsync(`
-      UPDATE targets SET
-         name = $name,
-         amount = $amount,
-         updated_at = CURRENT_TIMESTAMP
-      WHERE id = $id
-    `)
-
-    void statement.executeAsync({
-      $observation: data.observation,
-      $amount: data.amount,
-      $id: data.id,
-    })
-  }
-
   async function remove(id: number) {
-    await database.runAsync(`DELETE FROM targets WHERE id = ?`, id)
+    await database.runAsync(`DELETE FROM transactions WHERE id = ?`, id)
   }
 
   return {
     create,
     show,
-    update,
     remove,
     listByTargetId,
   }

@@ -9,6 +9,7 @@ import { Progress } from '@/components/Progress'
 import { Transaction, TransactionProps } from '@/components/Transaction'
 import { useTargetDatabase } from '@/database/useTargetDatabase'
 import { useTransactionsDatabase } from '@/database/useTrasactionsDatabase'
+import { formatDate } from '@/utils/formatDate'
 import { numberToCurrency } from '@/utils/numberToCurrency'
 import { TransactionTypes } from '@/utils/TransactionTypes'
 
@@ -54,7 +55,7 @@ export default function InProgress() {
               ? TransactionTypes.Input
               : TransactionTypes.Output,
           value: numberToCurrency(transaction.amount),
-          date: String(transaction.created_at),
+          date: formatDate(transaction.created_at),
           description: transaction.observation,
           id: String(transaction.id),
         })),
